@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const path = require("path");
 
 //connect to DB
 mongoose.connect(process.env.DATABASE_URL, {
@@ -29,5 +30,5 @@ if (process.env.NODE_ENV === "production") {
 }
 
 //port
-const PORT = 8080 || process.env.PORT;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`listening at ${PORT}`));
