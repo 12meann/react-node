@@ -1,0 +1,17 @@
+.icon {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
+button {
+  margin-right: 20px;
+}
+
+form .input {
+  display: flex;
+}
