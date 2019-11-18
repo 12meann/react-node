@@ -9,7 +9,8 @@ const path = require("path");
 //connect to DB
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
 const db = mongoose.connection;
 db.once("open", () => console.log("Connected to Mongo DB"));
@@ -20,6 +21,8 @@ app.use(express.json());
 
 //routes
 app.use("/todos", require("./api/todos"));
+app.use("/login", require("./api/login"));
+app.use("/register", require("./api/register"));
 
 // serve static assets if in production
 if (process.env.NODE_ENV === "production") {
