@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useReducer,
-  useEffect,
-  useCallback
-} from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import { authReducer, initialState } from "../reducer/authReducer";
 import axios from "axios";
 import applyToken from "../utilities/applyToken";
@@ -42,7 +37,6 @@ const AuthContextProvider = props => {
     }
     try {
       const res = await axios.get("/user");
-      console.log(res.data);
       dispatch({ type: "USER_LOADED", payload: res.data });
     } catch (error) {
       dispatch({ type: "USER_LOADED_ERROR", payload: error.response.data });
@@ -76,7 +70,6 @@ const AuthContextProvider = props => {
     }
   };
   useEffect(() => {
-    console.log("loadUser");
     loadUser();
   }, []);
 

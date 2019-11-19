@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useReducer,
-  useEffect,
-  useCallback
-} from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import { todosReducer, initialState } from "../reducer/todosReducer";
 import axios from "axios";
 
@@ -55,8 +50,39 @@ const TodosContextProvider = props => {
       dispatch({ type: "DELETE_TODO_FAIL", payload: error.response.data });
     }
   };
+  const getTodo = async todoId => {
+    try {
+      const res = await axios.get(`/todos/${todoId}`);
+      dispatch({ type: "GET_ONE_TODO", payload: res.data });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+
+      dispatch({ type: "GET_ONE_TODO_FAIL", payload: error.response.data });
+    }
+  };
+  const updateTodo = async (todoId, updatedTodo) => {
+    try {
+      const res = await axios.patch(
+        `/todos/${todoId}`,
+        { todo: updatedTodo },
+        config
+      );
+      console.log(res.data);
+      dispatch({ type: "UPDATE_TODO", payload: res.data });
+      setTimeout(() => {
+        dispatch({ type: "CLEAR_MSG" });
+      }, 2000);
+    } catch (error) {
+      console.log(error.response);
+      console.log(error.response.data);
+      dispatch({ type: "UPDATE_TODO_FAIL", payload: error.response.data });
+    }
+  };
   return (
-    <TodosContext.Provider value={{ todosState, addTodo, deleteTodo }}>
+    <TodosContext.Provider
+      value={{ todosState, addTodo, deleteTodo, getTodo, updateTodo }}
+    >
       {props.children}
     </TodosContext.Provider>
   );

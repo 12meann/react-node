@@ -3,7 +3,7 @@ export const initialState = {
   error: "",
   successMsg: "",
   todos: [],
-  todo: ""
+  oneTodo: ""
 };
 
 export const todosReducer = (state, action) => {
@@ -52,15 +52,39 @@ export const todosReducer = (state, action) => {
         successMsg: action.payload.success
       };
     case "DELETE_TODO_FAIL":
+    case "GET_ONE_TODO_FAIL":
+    case "UPDATE_TODO_FAIL":
       return {
         ...state,
         loading: false,
-        error: action.payload.errorMsg
+        error: action.payload.errorMsg,
+        oneTodo: ""
       };
     case "CLEAR_MSG":
       return {
         ...state,
         successMsg: ""
+      };
+    case "GET_ONE_TODO":
+      return {
+        ...state,
+        loading: false,
+        error: "",
+        oneTodo: action.payload.todo
+      };
+    case "UPDATE_TODO":
+      return {
+        ...state,
+        loading: false,
+        error: "",
+        oneTodo: "",
+        todos: [
+          ...state.todos.filter(
+            todo => todo._id !== action.payload.updatedTodo._id
+          ),
+          action.payload.updatedTodo
+        ],
+        success: action.payload.successMsg
       };
     default:
       return state;
