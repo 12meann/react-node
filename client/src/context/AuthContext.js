@@ -17,32 +17,43 @@ const AuthContextProvider = props => {
       "Content-Type": "application/json"
     }
   };
+  if (localStorage.token) {
+    applyToken(localStorage.token);
+  }
   const login = async userData => {
     dispatch({ type: "LOADING" });
     try {
       const res = await axios.post("/login", JSON.stringify(userData), config);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      console.log(res);
       //set token in headers
       applyToken(res.data.token);
       loadUser();
+      setTimeout(() => {
+        dispatch({ type: "CLEAR_MSG" });
+      }, 2000);
     } catch (error) {
       dispatch({ type: "LOGIN_FAIL", payload: error.response.data });
     }
   };
-  const loadUser = useCallback(async () => {
+  const loadUser = async () => {
     if (localStorage.token) {
       applyToken(localStorage.token);
     }
     try {
       const res = await axios.get("/user");
+      console.log(res.data);
       dispatch({ type: "USER_LOADED", payload: res.data });
     } catch (error) {
       dispatch({ type: "USER_LOADED_ERROR", payload: error.response.data });
     }
-  }, []);
+  };
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
+    setTimeout(() => {
+      dispatch({ type: "CLEAR_MSG" });
+    }, 2000);
   };
 
   const register = async userData => {
@@ -57,10 +68,17 @@ const AuthContextProvider = props => {
       //set token in headers
       applyToken(res.data.token);
       loadUser();
+      setTimeout(() => {
+        dispatch({ type: "CLEAR_MSG" });
+      }, 2000);
     } catch (error) {
       dispatch({ type: "REGISTER_FAIL", payload: error.response.data });
     }
   };
+  useEffect(() => {
+    console.log("loadUser");
+    loadUser();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ state, login, loadUser, logout, register }}>

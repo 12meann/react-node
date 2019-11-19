@@ -15,8 +15,8 @@ export const authReducer = (state, action) => {
       };
 
     case "LOGIN_SUCCESS":
-    case "USER_LOADED":
     case "REGISTER_SUCCESS":
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
         loading: false,
@@ -25,9 +25,17 @@ export const authReducer = (state, action) => {
         error: {},
         user: action.payload.user
       };
+    case "USER_LOADED":
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+        isAuthenticated: true
+      };
     case "LOGIN_FAIL":
     case "USER_LOADED_FAIL":
     case "REGISTER_FAIL":
+      localStorage.removeItem("token");
       return {
         ...state,
         loading: false,
@@ -36,12 +44,17 @@ export const authReducer = (state, action) => {
         user: null
       };
     case "LOGOUT":
-      localStorage.removeItem("x-auth-token");
+      localStorage.removeItem("token");
       return {
         ...state,
         isAuthenticated: false,
         user: null,
         successMsg: "You have successfully logout."
+      };
+    case "CLEAR_MSG":
+      return {
+        ...state,
+        successMsg: ""
       };
     default:
       return state;

@@ -1,38 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import { TodosContext } from "../context/TodosContext";
+import { AuthContext } from "../context/AuthContext";
 
-const AddTodo = ({ setErrorMsg, todos, setTodos, setSuccessMsg }) => {
+const AddTodo = () => {
   const [newTodo, setNewTodo] = useState("");
+  const { todosState, addTodo } = useContext(TodosContext);
+  const { loading, error, successMsg } = todosState;
 
-  const addTodo = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    try {
-      const res = await axios.post("/todos", { todo: newTodo });
-      setSuccessMsg(res.data.success);
-      setTodos([...todos, res.data.newTodo]);
-      setErrorMsg("");
-      setTimeout(() => {
-        setSuccessMsg("");
-      }, 2000);
-      setNewTodo("");
-    } catch (error) {
-      setErrorMsg(error.response.data.errorMsg);
-    }
+    addTodo(newTodo);
+    setNewTodo("");
   };
+  console.log(error);
   return (
-    <form onSubmit={addTodo}>
-      <div className="input">
-        <label htmlFor="todo"></label>
-        <input
-          type="text"
-          name="todo"
-          placeholder="Enter Todo"
-          value={newTodo}
-          onChange={e => setNewTodo(e.target.value)}
-        />
-        <button type="submit" className="icon">
-          <i className="material-icons small">add_circle</i>
-        </button>
+    <form onSubmit={handleSubmit}>
+      <div className="row">
+        <div className="input-field col s12">
+          <input
+            type="text"
+            name="todo"
+            value={newTodo}
+            className={error.errorMsg ? "invalid" : ""}
+            onChange={e => setNewTodo(e.target.value)}
+          />
+          <label htmlFor="todo">Add Todo</label>
+          {error && <span className="helper-text">{error}</span>}
+
+          <button type="submit" className="btn">
+            Add
+          </button>
+        </div>
       </div>
     </form>
   );
