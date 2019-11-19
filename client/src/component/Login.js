@@ -13,18 +13,18 @@ const Login = () => {
     e.preventDefault();
     const userData = { email, password };
     login(userData);
-    console.log(login);
   };
+
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
   return (
     <div className="row">
-      {loading ? (
+      {loading && (
         <div className="progress">
           <div className="indeterminate"></div>
         </div>
-      ) : null}
+      )}
       {successMsg && <p>{successMsg}</p>}
       {error.errorMsg && <p>{error.errorMsg}</p>}
 

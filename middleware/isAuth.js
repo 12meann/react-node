@@ -5,7 +5,7 @@ function auth(req, res, next) {
   //check token
   if (!token)
     return res.status(401).json({
-      fail: "Authorization denied. You have to be logged in to do that."
+      errorMsg: "Authorization denied. You have to be logged in to do that."
     });
 
   try {
@@ -19,7 +19,7 @@ function auth(req, res, next) {
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      fail:
+      errorMsg:
         "Authorization denied. You have to be logged in with your account to do that"
     });
   }

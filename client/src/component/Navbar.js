@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import M from "materialize-css";
 import { Link } from "react-router-dom";
-import { isRegExp } from "util";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { state, logout } = useContext(AuthContext);
+  const { isAuthenticated } = state;
   // useEffect(() => {
   //   const navBar = document.querySelectorAll(".sidenav");
   //   M.Modal.init(navBar);
   // }, []);
-  useEffect(() => {
-    if (localStorage.getItem("x-aut-token")) {
-      setIsAuthenticated(true);
-    }
-  }, [isAuthenticated]);
+
   const handleLogout = e => {
     console.log("click");
     e.preventDefault();
-    localStorage.removeItem("x-auth-token");
-    setIsAuthenticated(false);
+    logout();
   };
   return (
     <>

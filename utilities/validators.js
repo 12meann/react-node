@@ -23,11 +23,6 @@ exports.validate = data => {
     errors.password = "Password must be 6 or more characters";
   }
 
-  // if (data.confirmPassword === "") {
-  //   errors.confirmPassword = "Must confirm password";
-  // } else if (data.confirmPassword != data.password) {
-  //   errors.confirmPassword = "Passwords don't match";
-  // }
   if (isEmpty(data.name)) {
     errors.name = "Name is required";
   }
