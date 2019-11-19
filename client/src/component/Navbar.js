@@ -1,15 +1,10 @@
 import React, { useContext } from "react";
-import M from "materialize-css";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const { state, logout } = useContext(AuthContext);
   const { isAuthenticated } = state;
-  // useEffect(() => {
-  //   const navBar = document.querySelectorAll(".sidenav");
-  //   M.Modal.init(navBar);
-  // }, []);
 
   const handleLogout = e => {
     e.preventDefault();
@@ -35,7 +30,9 @@ const Navbar = () => {
               </>
             ) : (
               <li>
-                <a onClick={handleLogout}>Logout</a>
+                <Link to="/" onClick={handleLogout}>
+                  Logout
+                </Link>
               </li>
             )}
           </ul>

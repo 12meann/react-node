@@ -46,8 +46,11 @@ const TodoItem = ({ todo }) => {
         </button>
         <button
           data-target="modal1"
-          className="modal-trigger secondary-content icon"
+          className={`modal-trigger secondary-content icon ${
+            !isAuthenticated ? "disabled" : ""
+          }`}
           onClick={handleEdit}
+          disabled={!isAuthenticated}
         >
           <i className="material-icons">edit</i>
         </button>
