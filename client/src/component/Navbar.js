@@ -12,7 +12,6 @@ const Navbar = () => {
   // }, []);
 
   const handleLogout = e => {
-    console.log("click");
     e.preventDefault();
     logout();
   };
@@ -20,13 +19,11 @@ const Navbar = () => {
     <>
       <nav>
         <div className="nav-wrapper container">
-          <Link to="/" className="brand-logo">
+          <Link to="/" className="brand-logo left">
             Todo App
           </Link>
-          <a href="#" data-target="mobile-demo" className="sidenav-trigger">
-            <i className="material-icons right">menu</i>
-          </a>
-          <ul className="right hide-on-med-and-down">
+
+          <ul className="right">
             {!isAuthenticated ? (
               <>
                 <li>
@@ -44,18 +41,6 @@ const Navbar = () => {
           </ul>
         </div>
       </nav>
-      {/* sidenav */}
-      <ul className="sidenav" id="mobile-demo">
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-        <li>
-          <Link to="/register">Logout</Link>
-        </li>
-      </ul>
     </>
   );
 };

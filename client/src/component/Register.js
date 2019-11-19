@@ -19,7 +19,6 @@ const Register = () => {
     return <Redirect to="/" />;
   }
 
-  console.log("state", state);
   return (
     <div className="row">
       {loading && (

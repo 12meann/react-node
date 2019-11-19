@@ -6,7 +6,7 @@ const AddTodo = () => {
   const [newTodo, setNewTodo] = useState("");
   const { todosState, addTodo } = useContext(TodosContext);
   const { state } = useContext(AuthContext);
-  const { error, successMsg } = todosState;
+  const { error } = todosState;
   const { isAuthenticated } = state;
 
   const handleSubmit = e => {
@@ -16,7 +16,6 @@ const AddTodo = () => {
   };
   return (
     <form onSubmit={handleSubmit}>
-      {successMsg && <p>{successMsg}</p>}
       {error && <span className="helper-text">{error}</span>}
       <div className="row">
         <div className="input-field col s12">

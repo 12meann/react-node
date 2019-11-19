@@ -39,6 +39,7 @@ const AuthContextProvider = props => {
       const res = await axios.get("/user");
       dispatch({ type: "USER_LOADED", payload: res.data });
     } catch (error) {
+      console.log(error.response);
       dispatch({ type: "USER_LOADED_ERROR", payload: error.response.data });
     }
   };
@@ -58,6 +59,7 @@ const AuthContextProvider = props => {
         JSON.stringify(userData),
         config
       );
+      console.log(res.data);
       dispatch({ type: "REGISTER_SUCCESS", payload: res.data });
       //set token in headers
       applyToken(res.data.token);

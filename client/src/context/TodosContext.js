@@ -27,14 +27,13 @@ const TodosContextProvider = props => {
     dispatch({ type: "LOADING" });
     try {
       const res = await axios.post("/todos", { todo }, config);
-      console.log(res.data);
+
       dispatch({ type: "ADD_TODO", payload: res.data });
 
       setTimeout(() => {
         dispatch({ type: "CLEAR_MSG" });
       }, 2000);
     } catch (error) {
-      console.log(error.response.data);
       dispatch({ type: "ADD_TODO_FAIL", payload: error.response.data });
     }
   };
@@ -54,10 +53,7 @@ const TodosContextProvider = props => {
     try {
       const res = await axios.get(`/todos/${todoId}`);
       dispatch({ type: "GET_ONE_TODO", payload: res.data });
-      console.log(res.data);
     } catch (error) {
-      console.log(error);
-
       dispatch({ type: "GET_ONE_TODO_FAIL", payload: error.response.data });
     }
   };
@@ -68,13 +64,11 @@ const TodosContextProvider = props => {
         { todo: updatedTodo },
         config
       );
-      console.log(res.data);
       dispatch({ type: "UPDATE_TODO", payload: res.data });
       setTimeout(() => {
         dispatch({ type: "CLEAR_MSG" });
       }, 2000);
     } catch (error) {
-      console.log(error.response);
       console.log(error.response.data);
       dispatch({ type: "UPDATE_TODO_FAIL", payload: error.response.data });
     }
