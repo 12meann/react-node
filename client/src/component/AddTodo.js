@@ -6,14 +6,16 @@ import { AuthContext } from "../context/AuthContext";
 const AddTodo = () => {
   const [newTodo, setNewTodo] = useState("");
   const { todosState, addTodo } = useContext(TodosContext);
+  const { state } = useContext(AuthContext);
   const { loading, error, successMsg } = todosState;
+  const { isAuthenticated } = state;
 
   const handleSubmit = e => {
     e.preventDefault();
     addTodo(newTodo);
     setNewTodo("");
   };
-  console.log(error);
+  console.log(isAuthenticated);
   return (
     <form onSubmit={handleSubmit}>
       <div className="row">
@@ -28,7 +30,10 @@ const AddTodo = () => {
           <label htmlFor="todo">Add Todo</label>
           {error && <span className="helper-text">{error}</span>}
 
-          <button type="submit" className="btn">
+          <button
+            type="submit"
+            className={`btn ${!isAuthenticated ? "disabled" : ""}`}
+          >
             Add
           </button>
         </div>

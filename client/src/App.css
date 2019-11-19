@@ -26,3 +26,6 @@ form .input {
 .input-field .helper-text {
   color: red;
 }
+.disabled {
+  color: gray;
+}
