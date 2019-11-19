@@ -10,7 +10,6 @@ router.post("/", async (req, res) => {
   const { valid, errors } = validateLogin(req.body);
   if (!valid) return res.status(400).json(errors);
   const { email, password } = req.body;
-  const user = { email, password };
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ errorMsg: "Wrong credentials." });
@@ -37,9 +36,8 @@ router.post("/", async (req, res) => {
       }
     );
   } catch (error) {
-    console.log("backend error", error.response);
     res.status(500).json({
-      msg: "Something went wrong. Please try again.",
+      errorMsg: "Something went wrong. Please try again.",
       error
     });
   }
