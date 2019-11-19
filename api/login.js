@@ -27,13 +27,17 @@ router.post("/", async (req, res) => {
         if (err) throw err;
         res.json({
           token,
-          user,
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email
+          },
           success: `You have succesfully logged in, ${user.name}!`
         });
       }
     );
   } catch (error) {
-    console.log(error);
+    console.log("backend error", error.response);
     res.status(500).json({
       msg: "Something went wrong. Please try again.",
       error

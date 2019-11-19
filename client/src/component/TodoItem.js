@@ -71,7 +71,7 @@ const TodoItem = ({
           data-target="modal1"
           className="modal-trigger secondary-content icon"
         >
-          <i class="material-icons">edit</i>
+          <i className="material-icons">edit</i>
         </button>
       </li>
 

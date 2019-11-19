@@ -21,6 +21,7 @@ app.use(express.json());
 
 //routes
 app.use("/todos", require("./api/todos"));
+app.use("/user", require("./api/user"));
 app.use("/login", require("./api/login"));
 app.use("/register", require("./api/register"));
 

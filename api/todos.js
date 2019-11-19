@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Todo = require("../model/Todo");
+const isAuth = require("../middleware/isAuth");
 const { getTodoId } = require("../middleware/getTodoId");
 
 //get all todos
@@ -14,7 +15,7 @@ router.get("/", async (req, res) => {
   }
 });
 //get one todos
-router.get("/:id", getTodoId, (req, res) => {
+router.get("/:id", getTodoId, isAuth, (req, res) => {
   try {
     res.status(200).json(res.todo);
   } catch (error) {
@@ -24,7 +25,7 @@ router.get("/:id", getTodoId, (req, res) => {
 });
 
 //add todo
-router.post("/", async (req, res) => {
+router.post("/", isAuth, async (req, res) => {
   const todo = req.body.todo;
   if (todo.trim() === "") {
     return res.status(400).json({ errorMsg: "Must not be empty" });
@@ -39,7 +40,7 @@ router.post("/", async (req, res) => {
 });
 
 //edit todo
-router.patch("/:id", getTodoId, async (req, res) => {
+router.patch("/:id", getTodoId, isAuth, async (req, res) => {
   try {
     if (res.todo !== null) {
       res.todo.todo = req.body.todo;
@@ -56,7 +57,7 @@ router.patch("/:id", getTodoId, async (req, res) => {
 
 //delete todo
 
-router.delete("/:id", getTodoId, async (req, res) => {
+router.delete("/:id", getTodoId, isAuth, async (req, res) => {
   try {
     const deletedTodo = await res.todo.remove();
     res.status(200).json({ success: "Todo deleted", deletedTodo });

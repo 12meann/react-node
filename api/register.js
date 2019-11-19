@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 
 router.post("/", async (req, res) => {
   const { valid, errors } = validate(req.body);
-  if (!valid) res.status(400).json(errors);
+  if (!valid) return res.status(400).json(errors);
   const { password, email, name } = req.body;
   try {
     //check if already registered in DB
@@ -32,7 +32,11 @@ router.post("/", async (req, res) => {
         if (err) throw err;
         res.json({
           token,
-          user,
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email
+          },
           success: `You have succesfully registered. Welcome, ${user.name}!`
         });
       }

@@ -18,15 +18,16 @@ exports.validate = data => {
   }
   if (isEmpty(data.password)) {
     errors.password = "Password is required";
-  } else if (data.password.length < 6)
-    errors.password = "Password must be 6 or more characters";
-  console.log(data.confirmPassword);
-
-  if (data.confirmPassword === "") {
-    errors.confirmPassword = "Must confirm password";
-  } else if (data.confirmPassword !== data.password) {
-    errors.confirmPassword = "Passwords don't match";
   }
+  if (data.password.length < 6) {
+    errors.password = "Password must be 6 or more characters";
+  }
+
+  // if (data.confirmPassword === "") {
+  //   errors.confirmPassword = "Must confirm password";
+  // } else if (data.confirmPassword != data.password) {
+  //   errors.confirmPassword = "Passwords don't match";
+  // }
   if (isEmpty(data.name)) {
     errors.name = "Name is required";
   }
